@@ -37,6 +37,7 @@ class UserAdminModel(admin.ModelAdmin):
         return obj.personaluserinfo.find_choice(shortname)
     radio_chanal_list.short_description = 'Radio chanal'
     radio_chanal_list.admin_order_field = 'personaluserinfo__radio_chanal'
+    ordering = ('username',)
 
 # admin.site.unregister(settings.AUTH_USER_MODEL)
 # admin.site.register(settings.AUTH_USER_MODEL, UserAdminModel)

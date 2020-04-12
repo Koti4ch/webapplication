@@ -46,7 +46,13 @@ class PersonalUserInfo(models.Model):
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_addition_info(sender, instance, created, **kwargs):
     if created:
-        PersonalUserInfo.objects.create(user=instance)
+# TODO: question - error if i dont select any in radio_chanal form.
+        try:
+            if (instance.personaluserinfo.radio_chanal):
+                print('User {} was created!'.format(instance.username))
+        except:
+            PersonalUserInfo.objects.create(user=instance)
+            print('Error ignored')
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def resave_userinfo(sender, instance, **kwargs):
