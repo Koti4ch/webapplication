@@ -21,7 +21,7 @@
             <div class="collapse navbar-collapse" id="navbarsExample03">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Sign-in<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#auth-popup">Sign-in<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
@@ -43,7 +43,29 @@
     <div id='content'>{% block content %}{% endblock %}</div>
     
     <!-- Authorization fade window -->
-    <div class="auth-modal modal vertical-center" id='auth-popup' tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">
+    <div class="modal fade" id="auth-popup" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Авторизация</h4>
+                    <button type="button" class="close close--black" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    {% include 'authuser/login.html' %}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" form="login-form">Sign-in</button>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- <div class="auth-modal modal vertical-center" id='auth-popup' tabindex="-1" role="dialog" aria-hidden="false" style="display: none;">
         <div class="modal-dialog" style="margin-top: 138px; margin-bottom: 138px;">
             <div class="modal-content ml-auto">
                 <div class="auth-modal__header">
@@ -56,7 +78,7 @@
                 <div class="auth-modal__footer"></div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 </div>
     

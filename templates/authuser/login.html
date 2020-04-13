@@ -1,9 +1,6 @@
 <p>Please use the following form to login:</p>
-<form action="." method="POST">
+<form id="login-form" action="." method="POST">
     {% csrf_token %}
-    <div class="input mb-2 ml-auto">
-        {{ form.username }}
-    </div>
-    {{ form.password }}
-    <p><input type="submit" value="Log in"></p>
+    <p>{{ form.username }}</p>
+    <p>{{ form.password }}</p>
 </form>

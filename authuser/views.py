@@ -32,5 +32,12 @@ def login_user(request):
 
 
 def startPage(request):
-    form = LoginForm()
-    return render(request, 'base_tmpl.html', {'form': form})
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            print('Send form data:\nusername: {}\npassword: {}'.format(cd['username'], cd['password']))
+            return render(request, 'base_tmpl.html', {'form': form})
+    else:
+        form = LoginForm()
+        return render(request, 'base_tmpl.html', {'form': form})
