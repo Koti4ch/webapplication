@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 import os, socket
+
 # Create your models here.
 class User(AbstractUser):
     rmg_to_reg = models.CharField(max_length=25, blank=False, null=False, default=socket.gethostname, verbose_name='Created from compname')
@@ -12,33 +13,51 @@ class User(AbstractUser):
     login_to_reg = models.CharField(max_length=50, default=os.getlogin, blank=False, null=False, verbose_name='Created by login')
 
 
+
 class PersonalUserInfo(models.Model):
     RADIO_CHANALS = (
-        ('1k', '1 канал'),
-        ('St', 'Стлица'),
-        ('Ku', 'Культура'),
-        ('Ra', 'РадиусФМ'),
+        ('1k', '1й Канал'),
+        ('st', 'Столица'),
+        ('kl', 'Культура'),
+        ('ra', 'Радиус ФМ'),
+        ('na', 'Не определилась'),
     )
-    radio_chanal = models.CharField(max_length=2, choices=RADIO_CHANALS)
-    radio_room = models.CharField(max_length=3, blank=True)
-    working_position = models.CharField(max_length=35, blank=True)
-    user_birthday = models.DateField(null=True)
-    user_telephon = models.CharField(max_length=35, blank=True)
-    user_about = models.TextField(max_length=255, blank=True)
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # Friends_list = ???????????????
+
+    radio_chanal = models.CharField(max_length=2, choices=RADIO_CHANALS, default='na')
+    radio_room = models.CharField(max_length=9, blank=True)
+    working_position = models.CharField(max_length=25, blank=True)
+    user_birthday = models.DateField(null=True, blank=True)
+    user_telephone = models.CharField(max_length=15, blank=True)
+    user_about = models.TextField(max_length=255, blank=True)
+    # friendlist = 
 
     def __str__(self):
-        return "Профиль {}".format(self.user.username)
+        return 'about {}'.format(self.user.username)
+    
+    def find_choice(self, shortname):
+        for _ in self.RADIO_CHANALS:
+            if _[0] == shortname:
+                return _[1]
+    
+
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_user_profile(sender, instance, created, **kwargs):
+def create_addition_info(sender, instance, created, **kwargs):
     if created:
-        print(instance)
-        PersonalUserInfo.objects.create(user=instance)
+# TODO: question - error if i dont select any in radio_chanal form.
+        try:
+            if (instance.personaluserinfo.radio_chanal):
+                print('User {} was created!'.format(instance.username))
+        except:
+            PersonalUserInfo.objects.create(user=instance)
+            print('Error ignored')
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def save_user_profile(sender, instance, **kwargs):
-    print(instance)
+def resave_userinfo(sender, instance, **kwargs):
     instance.personaluserinfo.save()
+
+
+
+
