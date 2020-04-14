@@ -40,46 +40,19 @@
         </nav>
     </header>
     
-    <div id='content'>{% block content %}{% endblock %}</div>
-    
-    <!-- Authorization fade window -->
-    <div class="modal fade" id="auth-popup" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Авторизация</h4>
-                    <button type="button" class="close close--black" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    {% include 'authuser/login.html' %}
-                  </div>
-                  <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="login-form">Sign-in</button>
-                  </div>
-            </div>
-        </div>
+    <div id='content' class="content">{% block content %}{% endblock %}
+        <!-- Custom INFO -->
+        
+        <p>{{ request.user }}</p>
+        <p>{{ request.user.is_authenticated }}</p>
+        
+        <!--             -->
     </div>
+    
 
-
-
-
-    <!-- <div class="auth-modal modal vertical-center" id='auth-popup' tabindex="-1" role="dialog" aria-hidden="false" style="display: none;">
-        <div class="modal-dialog" style="margin-top: 138px; margin-bottom: 138px;">
-            <div class="modal-content ml-auto">
-                <div class="auth-modal__header">
-                    <h3>Авторизация:</h3>
-                    <button class="close close--black" type="button" data-dismiss="modal" aria-hidden="true"></button>
-                </div>
-                <div class="auth-modal__body">
-                    {% include 'authuser/login.html' %}
-                </div>
-                <div class="auth-modal__footer"></div>
-            </div>
-        </div>
-    </div> -->
-
+    <!-- Authorization fade window -->
+    {% include 'authuser/login_form.html' %}
+    
 </div>
     
 </body>

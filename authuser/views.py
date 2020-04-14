@@ -28,7 +28,7 @@ def login_user(request):
             return HttpResponse('Invalid login')
     else:
         form = LoginForm()
-        return render(request, 'authuser/login.html', {"form" : form})
+        return render(request, 'authuser/login_form.html', {"form" : form})
 
 
 def startPage(request):
