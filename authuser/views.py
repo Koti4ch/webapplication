@@ -3,8 +3,23 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 
 from .models import User, PersonalUserInfo
-from .forms import LoginForm
+from .forms import LoginForm, RegistrationForm
 # Create your views here.
+
+
+####    REGISTRATION FORM       ####
+def register(request):
+    # if request.method == 'POST':
+    #     reg_form = RegistrationForm(request.POST)
+    #     if reg_form.is_valid():
+    #         new_user = reg_form.save(commit=False)
+    #         new_user.set_password(reg_form.cleaned_data['password'])
+    #         new_user.save()
+    #         return render(request, 'authuser/registration.html', {'new_user': new_user})
+    # else:
+    form = LoginForm()
+    reg_form = RegistrationForm()
+    return render(request, 'authuser/registration.html', {'reg_form': reg_form, 'form': form})
 
 
 
