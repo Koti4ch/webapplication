@@ -46,14 +46,14 @@ class PersonalUserInfo(models.Model):
     
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_addition_info(sender, instance, created, **kwargs):
-    if created:
-        try:
-            print(instance.personaluserinfo)
-        except ObjectDoesNotExist as e:
-            PersonalUserInfo.objects.create(user=instance)
-            print(e)
+# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+# def create_addition_info(sender, instance, created, **kwargs):
+#     if created:
+#         try:
+#             print(instance.personaluserinfo)
+#         except ObjectDoesNotExist as e:
+#             PersonalUserInfo.objects.create(user=instance)
+#             print(e)
 
 
 # @receiver(post_save, sender=settings.AUTH_USER_MODEL)

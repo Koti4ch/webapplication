@@ -18,7 +18,7 @@ def register(request):
             new_user.set_password(reg_form.cleaned_data['password'])
             new_user.save()
             new_info = reg_personalInfo.save(commit=False)
-            new_info.user =  new_user
+            new_info.user = new_user
             new_info.save()
         return render(request, 'authuser/registration_page.html', {'reg_form': reg_form, 'userinfo_form':reg_personalInfo})
     else:

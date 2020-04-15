@@ -27,3 +27,7 @@ class RegistrationPersonalUserInfo(forms.ModelForm):
     class Meta:
         model = PersonalUserInfo
         fields = ('avatara' ,'radio_chanal', 'radio_room', 'working_position', 'user_birthday', 'user_telephone')
+
+        widgets = {
+            'user_birthday': forms.DateInput(attrs={'type': 'date', 'placeholder': 'Input your birthday'}),
+        }
