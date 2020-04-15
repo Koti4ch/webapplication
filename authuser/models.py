@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.exceptions import ObjectDoesNotExist
 
 import os, socket
 
@@ -20,12 +21,14 @@ class PersonalUserInfo(models.Model):
         ('st', 'Столица'),
         ('kl', 'Культура'),
         ('ra', 'Радиус ФМ'),
+        ('bl', '"Беларусь"'),
         ('na', 'Не определилась'),
     )
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-    radio_chanal = models.CharField(max_length=2, choices=RADIO_CHANALS, default='na')
+    avatara = models.ImageField(upload_to='users/', blank=True)
+    radio_chanal = models.CharField(max_length=2, choices=RADIO_CHANALS, default=RADIO_CHANALS[5])
     radio_room = models.CharField(max_length=9, blank=True)
     working_position = models.CharField(max_length=25, blank=True)
     user_birthday = models.DateField(null=True, blank=True)
@@ -46,17 +49,17 @@ class PersonalUserInfo(models.Model):
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_addition_info(sender, instance, created, **kwargs):
     if created:
-# TODO: question - error if i dont select any in radio_chanal form.
         try:
-            if (instance.personaluserinfo.radio_chanal):
-                print('User {} was created!'.format(instance.username))
-        except:
+            print(instance.personaluserinfo)
+        except ObjectDoesNotExist as e:
             PersonalUserInfo.objects.create(user=instance)
-            print('Error ignored')
+            print(e)
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def resave_userinfo(sender, instance, **kwargs):
-    instance.personaluserinfo.save()
+
+# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+# def resave_userinfo(sender, instance, **kwargs):
+#     instance.personaluserinfo.save()
+#     print('Profile for {} updated!'.format(instance.username))
 
 
 

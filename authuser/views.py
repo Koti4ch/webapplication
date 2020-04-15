@@ -3,23 +3,29 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 
 from .models import User, PersonalUserInfo
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationUserForm, RegistrationPersonalUserInfo
 # Create your views here.
 
 
 ####    REGISTRATION FORM       ####
 def register(request):
-    # if request.method == 'POST':
-    #     reg_form = RegistrationForm(request.POST)
-    #     if reg_form.is_valid():
-    #         new_user = reg_form.save(commit=False)
-    #         new_user.set_password(reg_form.cleaned_data['password'])
-    #         new_user.save()
-    #         return render(request, 'authuser/registration.html', {'new_user': new_user})
-    # else:
-    form = LoginForm()
-    reg_form = RegistrationForm()
-    return render(request, 'authuser/registration.html', {'reg_form': reg_form, 'form': form})
+    if request.method == 'POST':
+        reg_form = RegistrationUserForm(request.POST)
+        reg_personalInfo = RegistrationPersonalUserInfo(request.POST)
+        
+        if reg_form.is_valid() and reg_personalInfo.is_valid():
+            new_user = reg_form.save(commit=False)
+            new_user.set_password(reg_form.cleaned_data['password'])
+            new_user.save()
+            new_info = reg_personalInfo.save(commit=False)
+            new_info.user =  new_user
+            new_info.save()
+        return render(request, 'authuser/registration_page.html', {'reg_form': reg_form, 'userinfo_form':reg_personalInfo})
+    else:
+        form = LoginForm()
+        reg_form = RegistrationUserForm()
+        reg_personalInfo = RegistrationPersonalUserInfo()
+        return render(request, 'authuser/registration_page.html', {'reg_form': reg_form, 'form': form, 'userinfo_form':reg_personalInfo})
 
 
 
