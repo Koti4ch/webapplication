@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
+from django.contrib import messages
 
 from .models import User, PersonalUserInfo
 from .forms import LoginForm, RegistrationUserForm, RegistrationPersonalUserInfo
@@ -26,7 +27,6 @@ def register(request):
         reg_form = RegistrationUserForm()
         reg_personalInfo = RegistrationPersonalUserInfo()
         return render(request, 'authuser/registration_page.html', {'reg_form': reg_form, 'form': form, 'userinfo_form':reg_personalInfo})
-
 
 
 ####    LOGIN  FROM       ####
@@ -57,8 +57,15 @@ def startPage(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            print('Send form data:\nusername: {}\npassword: {}'.format(cd['username'], cd['password']))
-            return render(request, 'base_tmpl.html', {'form': form})
+            user = authenticate(request,
+                                username=cd['username'],
+                                password=cd['password'],
+                                )
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                messages.success(request, 'Вы вошли под именем {}'.format(request.user.username))
+                return render(request, 'base_tmpl.html', {'form': form})
     else:
         form = LoginForm()
         return render(request, 'base_tmpl.html', {'form': form})

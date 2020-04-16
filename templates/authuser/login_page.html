@@ -1,0 +1,33 @@
+{% extends 'base_tmpl.html' %}
+
+{% block content %}<h1>Login page</h1>
+    <div class="modal-dialog shadow-lg" role="dialog" style="margin-top: 138px; width: 380px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Авторизация</h4>
+                <button type="button" class="close close--black" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form" action="." method="POST">
+                    {% csrf_token %}
+                    <div class="mb-2" style="width: auto;">{{ form.username }}</div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>{{ form.password }}</div><a href="#" class="">Забыли пароль?</a>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-start">
+                <div>
+                    <p>Войти в помощью соцсети: ? ? ? ? ? ? ? ? ? ?</p>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <p>Нет аккаунта? <a href="{% url 'registration' %}"><u>Зарегистрироваться</u></a></p>
+                <button type="submit" class="btn btn-outline-primary" form="login-form">Войти</button>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
