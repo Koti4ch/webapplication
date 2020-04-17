@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from .models import User, PersonalUserInfo
-from .forms import LoginForm, RegistrationUserForm, RegistrationPersonalUserInfo
+from .forms import LoginForm, RegistrationUserForm, RegistrationPersonalUserInfo, EditUser, EditPersonalInfo
 # Create your views here.
 
 
@@ -51,6 +52,15 @@ def login_user(request):
         form = LoginForm()
         return render(request, 'authuser/login_form.html', {"form" : form})
 
+def logout_user(request):
+    if  not request.user.is_authenticated:
+        return redirect('index')
+    else:
+        logout(request)
+    # form = LoginForm()
+        messages.add_message(request, messages.INFO, 'Вы вышли из аккаунта!')
+        return redirect('index')
+
 
 def startPage(request):
     if request.method == 'POST':
@@ -69,3 +79,18 @@ def startPage(request):
     else:
         form = LoginForm()
         return render(request, 'base_tmpl.html', {'form': form})
+
+@login_required
+def editUserInfo(request):
+    if request.method == 'POST':
+        user_form = EditUser(instance=request.user, data=request.POST)
+        profile_form = EditPersonalInfo(instance=request.user.personaluserinfo, data=request.POST, files=request.FILES)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+    else:
+        user_form = EditUser(instance=request.user)
+        profile_form = EditPersonalInfo(instance=request.user.personaluserinfo)
+    
+    return render(request, 'authuser/profile_page.html', {'user_form': user_form, 'profile_form': profile_form})

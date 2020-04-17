@@ -22,12 +22,28 @@ class RegistrationUserForm(forms.ModelForm):
             raise forms.ValidationError('Passwords don\'t match!')
         return cd['password2']
 
-
 class RegistrationPersonalUserInfo(forms.ModelForm):
     class Meta:
         model = PersonalUserInfo
         fields = ('avatara' ,'radio_chanal', 'radio_room', 'working_position', 'user_birthday', 'user_telephone')
 
         widgets = {
+            'user_birthday': forms.DateInput(attrs={'type': 'date', 'placeholder': 'Input your birthday'}),
+        }
+
+
+
+class EditUser(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+class EditPersonalInfo(forms.ModelForm):
+    class Meta:
+        model = PersonalUserInfo
+        fields = ('avatara', 'radio_chanal', 'radio_room', 'working_position', 'user_birthday', 'user_telephone', 'user_about')
+
+        widgets = {
+            'user_about' : forms.Textarea(attrs={'cols': '70', 'rows': '5'}),
             'user_birthday': forms.DateInput(attrs={'type': 'date', 'placeholder': 'Input your birthday'}),
         }

@@ -22,6 +22,11 @@ class UserInfoInline(admin.StackedInline):
 
 @admin.register(User)
 class UserAdminModel(admin.ModelAdmin):
+    # 
+    def radio_chanal_list(self, obj):
+        shortname = obj.personaluserinfo.radio_chanal
+        return obj.personaluserinfo.find_choice(shortname)
+        
     inlines = [UserInfoInline,]
     readonly_fields = ('rmg_to_reg', 'login_to_reg')
 
@@ -32,13 +37,10 @@ class UserAdminModel(admin.ModelAdmin):
     list_filter = ('personaluserinfo__radio_chanal', 'is_active',)
     search_fields = ('username',)
 
-    # 
-    def radio_chanal_list(self, obj):
-        shortname = obj.personaluserinfo.radio_chanal
-        return obj.personaluserinfo.find_choice(shortname)
     radio_chanal_list.short_description = 'Radio chanal'
     radio_chanal_list.admin_order_field = 'personaluserinfo__radio_chanal'
     ordering = ('username',)
+    
 
 # admin.site.unregister(settings.AUTH_USER_MODEL)
 # admin.site.register(settings.AUTH_USER_MODEL, UserAdminModel)
