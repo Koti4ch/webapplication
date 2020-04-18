@@ -19,12 +19,47 @@
         </div>
         <hr>
         <div class="border-bottom">
-            {% for field in profile_form %}
                 <div class="border-bottom d-flex align-items-center">
-                    <div style="width: 200px;">{{ field.label_tag }}</div> {{ field }}
+                    <div style="width: 200px;">Имя:</div>
+                    <div>{{ user_form.first_name }}</div>
                 </div>
-            {% endfor %}
+
+                <div class="border-bottom d-flex align-items-center">
+                    <div style="width: 200px;">Фамилия:</div>
+                    <div>{{ user_form.last_name }}</div>
+                </div>
+
+                <div class="border-bottom d-flex align-items-center">
+                    <div style="width: 200px;">Дата рождения:</div>
+                    <div>{{ profile_form.user_birthday }}</div>
+                </div>
+
+                <div class="border-bottom d-flex align-items-center">
+                    <div style="width: 200px;">Номeр телефона:</div>
+                    <div>{{ profile_form.user_telephone }}</div>
+                </div>
+
+                <div class="border-bottom d-flex align-items-center">
+                    <div style="width: 200px;">E-Mail:</div>
+                    <div>{{ user_form.email }}</div>
+                </div>
+
+                <div class="border-bottom d-flex align-items-center">
+                    <div style="width: 200px;">Канал:</div>
+                    <div>{{ profile_form.radio_chanal }}</div>
+                </div>    
+
+                <div class="border-bottom d-flex align-items-center">
+                    <div style="width: 200px;">Должность:</div>
+                    <div>{{ profile_form.working_position }}</div>
+                </div>
+
+                <div class="border-bottom d-flex align-items-center">
+                    <div style="width: 200px;">Кабинет №:</div>
+                    <div>{{ profile_form.radio_room }}</div>
+                </div>
         </div>
+        <input class="btn btn-outline-primary" type="submit" value="Сохранить" style="height: 44px; width: 220px;">
     </form>
 </div>
 {% endblock %}

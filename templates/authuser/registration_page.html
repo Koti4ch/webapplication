@@ -11,8 +11,8 @@ Create an account
     <div class="container d-flex justify-content-around pt-1">
         <div class="d-flex flex-column">
             {% for field in reg_form %}
-                <div class="d-flex align-items-center justify-content-end mb-1" style="height: 34px;">
-                {{ field.label }}
+                <div class="d-flex align-items-center justify-content-end mb-2" style="height: 34px;">
+                {{ field.label_tag }}
                 <span class="mr-2"></span>
                 {{ field }}
                 </div>
@@ -20,8 +20,8 @@ Create an account
         </div>
         <div class="d-flex flex-column">
             {% for field in userinfo_form %}
-            <div class="d-flex align-items-center justify-content-between mb-1" style="height: 34px;">
-                {{ field.label }}
+            <div class="d-flex align-items-center justify-content-between mb-2" style="height: 34px;">
+                {{ field.label_tag }}
                 <span class="mr-2"></span>
                 {{ field }}
             </div>

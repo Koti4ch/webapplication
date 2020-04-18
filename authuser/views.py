@@ -11,6 +11,9 @@ from .forms import LoginForm, RegistrationUserForm, RegistrationPersonalUserInfo
 
 ####    REGISTRATION FORM       ####
 def register(request):
+    if request.user.is_authenticated:
+        messages.add_message(request, messages.WARNING, 'Вы уже зарегистрированы ')
+        return redirect('edit_profile')
     if request.method == 'POST':
         reg_form = RegistrationUserForm(request.POST)
         reg_personalInfo = RegistrationPersonalUserInfo(request.POST)
@@ -87,6 +90,7 @@ def editUserInfo(request):
         profile_form = EditPersonalInfo(instance=request.user.personaluserinfo, data=request.POST, files=request.FILES)
 
         if user_form.is_valid() and profile_form.is_valid():
+            messages.add_message(request, messages.INFO, 'Данные пользователя обновлены.')
             user_form.save()
             profile_form.save()
     else:
