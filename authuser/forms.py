@@ -36,7 +36,13 @@ class RegistrationPersonalUserInfo(forms.ModelForm):
 class EditUser(forms.ModelForm):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ('username', 'email', 'first_name', 'last_name', )
+
+        widgets = {
+           'username': forms.TextInput(attrs={'hidden': 'true',}),
+        } 
+
+
 
 class EditPersonalInfo(forms.ModelForm):
     class Meta:
@@ -46,4 +52,5 @@ class EditPersonalInfo(forms.ModelForm):
         widgets = {
             'user_about' : forms.Textarea(attrs={'cols': '70', 'rows': '5'}),
             'user_birthday': forms.DateInput(attrs={'type': 'date', 'placeholder': 'Input your birthday'}),
+            'user_about': forms.Textarea(attrs={'hidden':'true'}),
         }
