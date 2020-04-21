@@ -25,7 +25,8 @@ def register(request):
             new_info = reg_personalInfo.save(commit=False)
             new_info.user = new_user
             new_info.save()
-        return render(request, 'authuser/registration_page.html', {'reg_form': reg_form, 'userinfo_form':reg_personalInfo})
+            messages.add_message(request, messages.INFO, 'Пользователь {} зарегистрирован. Можете войти используя логин и пароль.'.format(new_user.username))
+            return redirect('index')
     else:
         form = LoginForm()
         reg_form = RegistrationUserForm()

@@ -5,7 +5,7 @@ Create an account
 {% endblock %}
 
 {% block content %}
-<form class="shadow" action="." method="POST">
+<form class="shadow" action="{% url 'registration' %}" method="POST">
     <h3>Заполните форму для регистрации</h3>
     {% csrf_token %}
     <div class="container d-flex justify-content-around pt-1">
