@@ -77,8 +77,15 @@ def startPage(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                messages.success(request, 'Вы вошли под именем {}'.format(request.user.username))
+                messages.add_message(request, messages.SUCCESS, 'Вы вошли под именем {}'.format(request.user.username))
                 return render(request, 'base_tmpl.html', {'form': form})
+            else:
+                messages.add_message(
+                    request, messages.WARNING, 'Учетная запись {} отключена!'.format(request.user.username))
+                return redirect('index')
+        else:
+            messages.add_message(request, messages.WARNING, 'Неверный логин или пароль!')
+            return redirect('index')
     else:
         form = LoginForm()
         return render(request, 'base_tmpl.html', {'form': form})

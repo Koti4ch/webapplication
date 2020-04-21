@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="login-form" action="." method="POST">
+                <form id="login-form" action="{% url 'login' %}" method="POST">
                     {% csrf_token %}
                     <div class="mb-2">{{ form.username }}</div>
                     <div class="d-flex align-items-center justify-content-between">
