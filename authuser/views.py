@@ -25,7 +25,8 @@ def register(request):
             new_info = reg_personalInfo.save(commit=False)
             new_info.user = new_user
             new_info.save()
-            messages.add_message(request, messages.INFO, 'Пользователь {} зарегистрирован. Можете войти используя логин и пароль.'.format(new_user.username))
+            messages.add_message(
+                request, messages.INFO, 'Пользователь {} зарегистрирован. Можете <a class="alert-link" href="#" data-toggle="modal" data-target="#auth-popup">войти</a> используя логин и пароль.'.format(new_user.username))
             return redirect('index')
     else:
         form = LoginForm()
@@ -34,27 +35,6 @@ def register(request):
         return render(request, 'authuser/registration_page.html', {'reg_form': reg_form, 'form': form, 'userinfo_form':reg_personalInfo})
 
 
-####    LOGIN  FROM       ####
-# def login_user(request):
-#     if request.method == 'POST':
-#         form = LoginForm(request.POST)
-#         if form.is_valid():
-#             cd = form.cleaned_data
-#             user = authenticate(request,
-#                 username=cd['username'],
-#                 password=cd['password'],
-#             )
-#         if user is not None:
-#             if user.is_active:
-#                 login(request, user)
-#                 return HttpResponse('Authenticated successfully')
-#             else:
-#                 return HttpResponse('Disabled account')
-#         else:
-#             return HttpResponse('Invalid login')
-#     else:
-#         form = LoginForm()
-#         return render(request, 'authuser/login_form.html', {"form" : form})
 
 def logout_user(request):
     if  not request.user.is_authenticated:
@@ -64,6 +44,7 @@ def logout_user(request):
     # form = LoginForm()
         messages.add_message(request, messages.INFO, 'Вы вышли из аккаунта!')
         return redirect('index')
+
 
 
 def startPage(request):
@@ -79,14 +60,13 @@ def startPage(request):
             if user.is_active:
                 login(request, user)
                 messages.add_message(request, messages.SUCCESS, 'Вы вошли под именем {}'.format(request.user.username))
-                return render(request, 'base_tmpl.html', {'form': form})
+                # return render(request, 'base_tmpl.html', {'form': form})
             else:
                 messages.add_message(
                     request, messages.WARNING, 'Учетная запись {} отключена!'.format(request.user.username))
-                return redirect('index')
         else:
-            messages.add_message(request, messages.WARNING, 'Неверный логин или пароль!')
-            return redirect('index')
+            messages.add_message(request, messages.ERROR, 'Неверный логин или пароль!')
+        return redirect('index')
     else:
         form = LoginForm()
         return render(request, 'base_tmpl.html', {'form': form})
@@ -95,14 +75,11 @@ def startPage(request):
 @login_required
 def editUserInfo(request):
     if request.method == 'POST':
+        print(request.POST.get('next'))
         user_form = EditUser(instance=request.user, data=request.POST)
         profile_form = EditPersonalInfo(instance=request.user.personaluserinfo, data=request.POST, files=request.FILES)
 
-        print(user_form.is_valid())
-        print(profile_form.is_valid())
-
         if user_form.is_valid() and profile_form.is_valid():
-            print('ok')
             messages.add_message(request, messages.INFO, 'Данные пользователя обновлены.')
             user_form.save()
             profile_form.save()

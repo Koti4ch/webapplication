@@ -47,12 +47,11 @@
     </header>
     
     <div id='content' class="mt-3 container">
-    
 
     {% if messages %}
     {% for message in messages %}
     <div class="sticky-top alert alert-{{ message.tags }} alert-dismissible" role="alert">
-        {{message}}
+        {{message|safe}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -62,6 +61,73 @@
 
 
         {% block content %}
+            <div class="card-deck mb-3 text-center">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Application №1</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">ИКОНКА <small class="text-muted">для сервиса</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Небольшое описание</li>
+                            <li>приложения и ссылка</li>
+                            <li>для перехода к</li>
+                            <li>выбранному сервису</li>
+                        </ul>
+                    {% if request.user.is_authenticated %}
+                        <a href="#" class="btn btn-lg btn-block btn-outline-primary">Начать</a>
+                    {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        доступно только для зарегистрированных пользователей
+                    </div>
+                    {% endif %}
+                    </div>
+                </div>
+
+                <!-- <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Application №2</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">ИКОНКА <small class="text-muted">для сервиса</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Небольшое описание</li>
+                            <li>приложения и ссылка</li>
+                            <li>для перехода к</li>
+                            <li>выбранному сервису</li>
+                        </ul>
+                    {% if request.user.is_authenticated %}
+                        <a href="#" class="btn btn-lg btn-block btn-outline-primary">Начать</a>
+                    {% else %}
+                        <div class="alert alert-warning" role="alert">
+                            доступно только для зарегистрированных пользователей
+                        </div>
+                    {% endif %}
+                    </div>
+                </div>
+
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Application №3</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">ИКОНКА <small class="text-muted">для сервиса</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Небольшое описание</li>
+                            <li>приложения и ссылка</li>
+                            <li>для перехода к</li>
+                            <li>выбранному сервису</li>
+                        </ul>
+                        {% if request.user.is_authenticated %}
+                        <a href="#" class="btn btn-lg btn-block btn-outline-primary">Начать</a>
+                        {% else %}
+                        <div class="alert alert-warning" role="alert">
+                            доступно только для зарегистрированных пользователей
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div> -->
         {% endblock %}
         <!-- Custom INFO -->
                 <!-- <p>{{ request.user }}</p>

@@ -3,8 +3,9 @@ from .models import User, PersonalUserInfo
 from django.conf import settings
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder':'Login or E-Mail', 'style':'width:100%;'}))
-    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    username = forms.CharField(label='', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Login or E-Mail', 'style': 'width:100%;'}))
+    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
 
 
 class RegistrationUserForm(forms.ModelForm):
