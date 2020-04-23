@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.exceptions import ObjectDoesNotExist
+from PIL import Image
 
 import os, socket
 
@@ -45,23 +46,10 @@ class PersonalUserInfo(models.Model):
             if _[0] == shortname:
                 return _[1]
     
-
-
-# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-# def create_addition_info(sender, instance, created, **kwargs):
-#     if created:
-#         try:
-#             print(instance.personaluserinfo)
-#         except ObjectDoesNotExist as e:
-#             PersonalUserInfo.objects.create(user=instance)
-#             print(e)
-
-
-# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-# def resave_userinfo(sender, instance, **kwargs):
-#     instance.personaluserinfo.save()
-#     print('Profile for {} updated!'.format(instance.username))
-
-
-
-
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
+        with Image.open(self.avatara.path) as userava:
+            if userava.height != 256 or userava.width != 256:
+                resize = (256, 256)
+                userava.thumbnail(resize)
+                userava.save(self.photo.path)
