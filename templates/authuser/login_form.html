@@ -8,12 +8,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="login-form" action="{% url 'index' %}" method="POST">
-                    <input type="hidden" name="next" value="{{ next }}" />
+                <form id="login-form" action="{% url 'login' %}" method="POST">
                     {% csrf_token %}
-                    <div class="mb-2" style="width: auto;">{{ form.username }}</div>
+                    <div class="mb-2" style="width: auto;">{{ login_form.username }}</div>
                     <div class="d-flex align-items-center justify-content-between">
-                        <div>{{ form.password }}</div><a href="#" class="">Забыли пароль?</a>
+                        <div>{{ login_form.password }}</div><a href="#" class="">Забыли пароль?</a>
                     </div>
                 </form>
             </div>

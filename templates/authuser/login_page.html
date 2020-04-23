@@ -1,35 +1,26 @@
 {% extends 'base_tmpl.html' %}
 
-{% block content %}<h1>Login page</h1>
-    <div class="modal-dialog shadow-lg" role="dialog" style="margin-top: 138px; width: 380px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Авторизация</h4>
-                <button type="button" class="close close--black" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="login-form" action="{% url 'login' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="mb-2">{{ form.username }}</div>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>{{ form.password }}</div><a href="#" class="">Забыли пароль?</a>
-                    </div>
-                    <input type="hidden" name="next" value="{{ next }}" />
-                </form>
-            </div>
-            <!-- TODO: social backend -->
-            <!-- <div class="modal-footer d-flex justify-content-start">
-                <div>
-                    <p>Войти в помощью соцсети: ? ? ? ? ? ? ? ? ? ?</p>
-                </div>
-            </div> -->
-            <div class="modal-footer d-flex justify-content-between">
-                <p>Нет аккаунта? <a href="{% url 'registration' %}"><u>Зарегистрироваться</u></a></p>
-                <button type="submit" class="btn btn-outline-primary" form="login-form">Войти</button>
-            </div>
-
+{% block content %}
+{% if redirect_next %}
+    <form class="form-signin" method="POST" action="{% url 'login' %}?next={{ redirect_next }}">
+{% else %}
+    <form class="form-signin" method="POST" action="{% url 'login' %}">
+{% endif %}
+        <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Войдите под своим логином</h1>
+        <label for="inputEmail" class="sr-only">Login</label>
+        {% csrf_token %}
+        {{ login_form.username }}
+        <!-- <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus=""> -->
+        <label for="inputPassword" class="sr-only">Password</label>
+        {{ login_form.password }}
+        <!-- <input type="password" id="inputPassword" class="form-control" placeholder="Password" required=""> -->
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Запомнить меня
+            </label>
         </div>
-    </div>
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Войти">
+        <p class="mt-5 mb-3 text-muted">© 2020</p>
+    </form>
 {% endblock %}
