@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 from django.core.exceptions import ObjectDoesNotExist
 from PIL import Image
@@ -29,7 +29,7 @@ class PersonalUserInfo(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-    avatara = models.ImageField(upload_to='users/', blank=True)
+    avatara = models.ImageField(upload_to='users_avas/', blank=True, null=True, default='base.jpg')
     radio_chanal = models.CharField(max_length=2, choices=RADIO_CHANALS, default=RADIO_CHANALS[5])
     radio_room = models.CharField(max_length=9, blank=True)
     working_position = models.CharField(max_length=25, blank=True)
@@ -40,16 +40,47 @@ class PersonalUserInfo(models.Model):
 
     def __str__(self):
         return 'about {}'.format(self.user.username)
+
     
     def find_choice(self, shortname):
         for _ in self.RADIO_CHANALS:
             if _[0] == shortname:
                 return _[1]
     
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
+
+    def save(self):
+        super().save()
         with Image.open(self.avatara.path) as userava:
-            if userava.height != 256 or userava.width != 256:
+            if userava.height > 256 or userava.width > 256:
                 resize = (256, 256)
                 userava.thumbnail(resize)
-                userava.save(self.photo.path)
+                userava.save(self.avatara.path)
+
+
+
+# @receiver(post_delete, sender=PersonalUserInfo)
+# def auto_delete_file_on_delete(sender, instance, **kwargs):
+#     if instance.avatara:
+#         if os.path.isfile(instance.avatara.path):
+#             os.remove(instance.avatara.path)
+#             # instance.avatara.delete(True)
+#             instance.avatara = 'base.jpg'
+#     else:
+#         instance.avatara = 'base.jpg'
+
+# @receiver(pre_save, sender=PersonalUserInfo)
+# def auto_delete_file_on_change(sender, instance, **kwargs):
+#     if not instance.pk:
+#         return False
+    
+#     try:
+#         old_file = PersonalUserInfo.objects.get(pk=instance.pk).avatara
+#     except PersonalUserInfo.DoesNotExist:
+#         return False
+
+#     new_file = instance.avatara
+#     if old_file != 'base.jpg':
+#         if not old_file == new_file:
+#             if os.path.isfile(old_file.path):
+#                 os.remove(old_file.path)
+

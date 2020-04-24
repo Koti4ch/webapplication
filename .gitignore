@@ -1,4 +1,5 @@
 **/__pycache__
 **/migrations
+**/users_avas
 .vscode/
 db.sqlite3
