@@ -42,7 +42,11 @@ class EditUser(forms.ModelForm):
         fields = ('username', 'email', 'first_name', 'last_name', )
 
         widgets = {
+        # attrs = {'class': 'form-control'}
            'username': forms.TextInput(attrs={'hidden': 'true',}),
+           'email': forms.EmailInput(attrs={'class': 'form-control'}),
+           'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+           'last_name': forms.TextInput(attrs={'class': 'form-control'}),
         } 
 
 
@@ -53,6 +57,11 @@ class EditPersonalInfo(forms.ModelForm):
         fields = ('avatara', 'radio_chanal', 'radio_room', 'working_position', 'user_birthday', 'user_telephone', 'user_about')
 
         widgets = {
-            'user_about': forms.Textarea(attrs={'cols': '70', 'rows': '5', 'hidden': 'true'}),
-            'user_birthday': forms.DateInput(attrs={'type': 'date', 'placeholder': 'Input your birthday'}),
+            'avatara': forms.FileInput(attrs={'class':"sss", 'style':'position: absolute; top: 78%; left: 16%;', 'value': "Изменить"}),
+            'user_about': forms.Textarea(attrs={'cols': '70', 'rows': '5', 'hidden': 'true', 'class': 'form-control'}),
+            'user_birthday': forms.DateInput(attrs={'type': 'date', 'placeholder': 'Input your birthday', 'class': 'form-control'}),
+            'radio_chanal': forms.Select(attrs={'class': 'form-control'}),
+            'radio_room': forms.TextInput(attrs={'class': 'form-control', 'style': 'text-align: end;', 'size': '4'}),
+            'working_position': forms.TextInput(attrs={'class': 'form-control'}),
+            'user_telephone': forms.TextInput(attrs={'class': 'form-control'}),
         }
