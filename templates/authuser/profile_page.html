@@ -27,16 +27,16 @@
                 <!-- <input type="file" class="sss" style="position: absolute; top: 78%; left: 16%;" value="Изменить"> -->
                 <img class="rounded" src="{{ request.user.personaluserinfo.avatara.url }}" width="100" style="max-height: 256px;">
             </div>
-            <p class="media-body pb-3 mb-0 medium lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">{{ user_form.username.value }}</strong>
+            <p class="media-body pb-3 mb-2 medium lh-125 pb-1">
+                <strong class="d-block text-gray-dark border-bottom">{{ user_form.username.value }}</strong>
                 {{ user_form.username }}
                 <i class="d-block text-gray-dark">{{ profile_form.user_about.value }}</i>
                 <i class="d-block text-gray-dark">{{ profile_form.user_about }}</i>
             </p>
             
         </div>
-        <hr>
-        <div class="border-bottom">
+
+        <div class="mt-2 pt-1 border-top">
                 <div class="border-bottom d-flex align-items-center">
                     <div style="width: 200px;">Имя:</div>
                     <div>{{ user_form.first_name }}</div>
