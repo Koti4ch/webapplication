@@ -55,10 +55,10 @@ def register(request):
                 request, messages.INFO, 'Пользователь {} зарегистрирован. Можете <a class="alert-link" href="#" data-toggle="modal" data-target="#auth-popup">войти</a> используя логин и пароль.'.format(new_user.username))
             return redirect('index')
     else:
-        form = LoginForm()
+        login_form = LoginForm()
         reg_form = RegistrationUserForm()
         reg_personalInfo = RegistrationPersonalUserInfo()
-        return render(request, 'authuser/registration_page.html', {'reg_form': reg_form, 'form': form, 'userinfo_form':reg_personalInfo})
+        return render(request, 'authuser/registration_page.html', {'reg_form': reg_form, 'login_form': login_form, 'userinfo_form':reg_personalInfo})
 
 
 

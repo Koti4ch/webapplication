@@ -59,7 +59,7 @@ class EditPersonalInfo(forms.ModelForm):
         widgets = {
             'avatara': forms.FileInput(attrs={'class':"sss", 'style':'position: absolute; top: 78%; left: 16%;', 'value': "Изменить"}),
             'user_about': forms.Textarea(attrs={'cols': '70', 'rows': '5', 'hidden': 'true', 'class': 'form-control mt-1 mb-1'}),
-            'user_birthday': forms.DateInput(attrs={'type': 'date', 'placeholder': 'Input your birthday', 'class': 'form-control mt-1 mb-1'}),
+            'user_birthday': forms.DateInput(attrs={'type': 'date', 'style': 'text-align: end;', 'class': 'form-control mt-1 mb-1'}),
             'radio_chanal': forms.Select(attrs={'class': 'form-control mt-1 mb-1'}),
             'radio_room': forms.TextInput(attrs={'class': 'form-control mt-1 mb-1', 'style': 'text-align: end;', 'size': '4'}),
             'working_position': forms.TextInput(attrs={'class': 'form-control mt-1 mb-1'}),
