@@ -92,13 +92,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS' : {
+            'min_length' : 5,
+        }
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 
@@ -135,3 +138,12 @@ SESSION_COOKIE_AGE = 60*60*2
 
 
 AUTH_USER_MODEL = 'authuser.User'
+
+
+
+# SMTP yandex server
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_HOST_USER = "dkt324@yandex.ru"
+EMAIL_HOST_PASSWORD = "shilov324"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

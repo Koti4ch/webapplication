@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse_lazy
 
 from .models import User, PersonalUserInfo
 from .forms import LoginForm, RegistrationUserForm, RegistrationPersonalUserInfo, EditUser, EditPersonalInfo
@@ -33,6 +35,18 @@ from .forms import LoginForm, RegistrationUserForm, RegistrationPersonalUserInfo
 #             messages.add_message(request, messages.ERROR,
 #                                  'Неверный логин или пароль!')
 #     return HttpResponseRedirect(next)
+
+
+####    Custom Password Change view     ####
+class PasswordChanger(PasswordChangeView):
+    template_name = 'authuser/chpass_page.html'
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Пароль был успешно изменен.")
+        return super().form_valid(form)
+
+    
 
 
 ####    REGISTRATION FORM       ####
