@@ -5,34 +5,20 @@
     <form id='registration_form' action="{% url 'edit_profile' %}" method="POST">
         {% csrf_token %}
         <h6 class="border-bottom border-gray pb-2 mb-0">Профиль пользователя:</h6>
-        <div class="media text-muted pt-3">
-<!--             <svg class="bd-placeholder-img mr-2 rounded" width="72" height="72" xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32">
-            <title>Аватарка {{ request.user.username }}</title>
-            
-            <rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff"
-                dy=".3em">32x32</text>  
-            </svg> -->
-            <style>
-                .sss {
-                    display: none;
-                }
-
-                .image-box:hover .sss {
-                    display: block;
-                }
-            </style>
-            <div class="container image-box" style="position: relative; width: auto;">
+        <div class="media">
+            <img class="rounded mt-2" src="{{ request.user.personaluserinfo.avatara.url }}" width="100" style="max-height: 256px;">
+            <!-- <div class="container image-box" style="position: relative; width: auto;">
                 {{ profile_form.avatara }}
-                <!-- <input type="file" class="sss" style="position: absolute; top: 78%; left: 16%;" value="Изменить"> -->
                 <img class="rounded" src="{{ request.user.personaluserinfo.avatara.url }}" width="100" style="max-height: 256px;">
+            </div> -->
+            <div class="media-body ml-3">
+                <strong class="text-gray-dark text-muted">{{ user_form.username.value }} {{ user_form.username }}</strong>
+                <div class="border-bottom mb-1"></div>
+                <!-- TODO: editable div field -->
+                <div id="id_user_about" name="user_about" data-user-about="1" class="d-block text-gray-dark overflow-hidden text-break" contenteditable="true">{{ profile_form.user_about.value }}</div>
+                {{ profile_form.user_about }}
+                <!-- <i class="d-block text-gray-dark">{{ profile_form.user_about }}</i> -->
             </div>
-            <p class="media-body pb-3 mb-2 medium lh-125 pb-1">
-                <strong class="d-block text-gray-dark border-bottom">{{ user_form.username.value }}</strong>
-                {{ user_form.username }}
-                <i class="d-block text-gray-dark">{{ profile_form.user_about.value }}</i>
-                <i class="d-block text-gray-dark">{{ profile_form.user_about }}</i>
-            </p>
             
         </div>
 

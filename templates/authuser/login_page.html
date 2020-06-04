@@ -2,25 +2,26 @@
 
 {% block content %}
 {% if redirect_next %}
-    <form class="form-signin" method="POST" action="{% url 'login' %}?next={{ redirect_next }}">
+    <form class="form-signin w-75 mx-auto" method="POST" action="{% url 'login' %}?next={{ redirect_next }}">
 {% else %}
-    <form class="form-signin" method="POST" action="{% url 'login' %}">
+    <form class="form-signin w-75 mx-auto" method="POST" action="{% url 'login' %}">
 {% endif %}
-        <img class="mb-4" src="" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Войдите под своим логином</h1>
         <label for="inputEmail" class="sr-only">Login</label>
         {% csrf_token %}
-        {{ login_form.username }}
-        <!-- <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus=""> -->
-        <label for="inputPassword" class="sr-only">Password</label>
-        {{ login_form.password }}
+        <!-- {{ login_form.username }} -->
+        <input type="text" name="username" class="form-control mb-1" placeholder="Login or E-Mail" style="width:100%;" required="" id="id_username">
+        <!-- <input type="text" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus=""> -->
+        <label for="inputPassword" class="sr-only mt-2">Password</label>
+        <!-- {{ login_form.password }} -->
+        <input type="password" name="password" class="form-control mb-2" placeholder="Password" required="" id="id_password">
         <!-- <input type="password" id="inputPassword" class="form-control" placeholder="Password" required=""> -->
         <div class="checkbox mb-3">
             <label>
                 <input type="checkbox" value="remember-me"> Запомнить меня
             </label>
         </div>
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Войти">
-        <p class="mt-5 mb-3 text-muted">© 2020</p>
+        <input class="btn btn-lg btn-primary btn-block w-25 mx-auto" type="submit" value="Войти">
+        <p class="mt-5 mb-3 text-muted mx-auto">© 2020</p>
     </form>
 {% endblock %}

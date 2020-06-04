@@ -2,12 +2,13 @@
 
 
 {% block content %}
-<h1>Change password</h1>
-<form action="{% url 'password_change' %}" method="POST">
-    
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Confirm!">
-
+<form action="{% url 'password_change' %}" method="POST" class="mx-auto w-75 shadow-sm">
+    <fieldset class="bg-white border p-4">
+        <legend class="">Смена пароля для пользователя <span class="text-muted font-weight-bold">{{ request.user.username }}</span></legend>
+        
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Сменить пароль">
+    </fieldset>
 </form>
 {% endblock %}

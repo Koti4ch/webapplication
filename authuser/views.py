@@ -150,6 +150,7 @@ def startPage(request):
 @login_required
 def editUserInfo(request):
     if request.method == 'POST':
+        print(request.POST)
         print(request.POST.get('next'))
         user_form = EditUser(instance=request.user, data=request.POST)
         profile_form = EditPersonalInfo(instance=request.user.personaluserinfo, data=request.POST, files=request.FILES)
