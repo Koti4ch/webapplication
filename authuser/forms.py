@@ -4,8 +4,8 @@ from django.conf import settings
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='', widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Login or E-Mail', 'style': 'width:100%;'}))
-    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
+        attrs={'class': 'form-control', 'placeholder': 'Login или E-Mail', 'style': 'width:100%;'}))
+    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Пароль'}))
 
 
 class RegistrationUserForm(forms.ModelForm):
@@ -14,8 +14,8 @@ class RegistrationUserForm(forms.ModelForm):
         fields = ('username', 'first_name', 'last_name', 'email')
 
 
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Пароль2', widget=forms.PasswordInput)
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -28,10 +28,14 @@ class RegistrationUserForm(forms.ModelForm):
 class RegistrationPersonalUserInfo(forms.ModelForm):
     class Meta:
         model = PersonalUserInfo
-        fields = ('avatara' ,'radio_chanal', 'radio_room', 'working_position', 'user_birthday', 'user_telephone')
+        fields = ('radio_chanal', 'radio_room', 'working_position', 'user_birthday', 'user_telephone')
 
         widgets = {
-            'user_birthday': forms.DateInput(attrs={'type': 'date', 'placeholder': 'Input your birthday'}),
+            'user_birthday': forms.DateInput(attrs={'type': 'date'}),
+            'radio_room': forms.TextInput(attrs={'class': "standart_form--input"}),
+            'working_position': forms.TextInput(attrs={'class': "standart_form--input"}),
+            'user_birthday': forms.DateInput(attrs={'class': "standart_form--input"}),
+            'user_telephone': forms.DateInput(attrs={'class': "standart_form--input"}),
         }
 
 
@@ -57,7 +61,7 @@ class EditPersonalInfo(forms.ModelForm):
         fields = ('avatara', 'radio_chanal', 'radio_room', 'working_position', 'user_birthday', 'user_telephone', 'user_about')
 
         widgets = {
-            'avatara': forms.FileInput(attrs={'class':"sss", 'style':'position: absolute; top: 78%; left: 16%;', 'value': "Изменить"}),
+            # 'avatara': forms.FileInput(attrs={'class':"sss", 'style':'position: absolute; top: 78%; left: 16%;', 'value': "Изменить"}),
             'user_about': forms.Textarea(attrs={'cols': '70', 'rows': '5', 'hidden': 'true', 'class': 'form-control mt-1 mb-1'}),
             'user_birthday': forms.DateInput(attrs={'type': 'date', 'style': 'text-align: end;', 'class': 'form-control mt-1 mb-1'}),
             'radio_chanal': forms.Select(attrs={'class': 'form-control mt-1 mb-1'}),

@@ -1,12 +1,41 @@
 {% extends 'base_tmpl.html' %}
+{% load static %}
 
 {% block title %}
 Create an account
 {% endblock %}
 
+{% block adition_meta %}
+<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock %}
+
 {% block content %}
+<button id="console" class="btn btn-primary">Console Log</button>
 <form class="shadow" action="{% url 'registration' %}" method="POST">
-    <h3>Заполните форму для регистрации</h3>
+    <legend>Регистрация</legend>
+
+    <div class="standart_form">
+        <div class="standart_form--label text-muted empty">Имя</div>
+        <input type="text" class="standart_form--input" required autocomplete="off">
+    </div>
+
+     <div class="standart_form">
+         <div class="standart_form--label text-muted empty">Фамилия</div>
+         <input type="text" class="standart_form--input" required autocomplete="off">
+     </div>
+
+      <div class="standart_form">
+          <div class="standart_form--label text-muted empty">E-mail</div>
+          <input type="text" class="standart_form--input" required autocomplete="off">
+      </div>
+
+</form>
+
+
+
+
+<form class="shadow" action="{% url 'registration' %}" method="POST">
+    <h3>Заполните форму для регистрации2!</h3>
     {% csrf_token %}
     <div class="container d-flex justify-content-around pt-1">
         <div class="d-flex flex-column">
@@ -20,9 +49,9 @@ Create an account
         </div>
         <div class="d-flex flex-column">
             {% for field in userinfo_form %}
-            <div class="d-flex align-items-center justify-content-between mb-2" style="height: 34px;">
-                {{ field.label_tag }}
-                <span class="mr-2"></span>
+            <div class="standart_form">
+                <div class="standart_form--label text-muted empty">{{ field.label }}</div>
+                <!-- <input type="text" class="standart_form--input" required autocomplete="off"> -->
                 {{ field }}
             </div>
             {% endfor %}
@@ -32,4 +61,5 @@ Create an account
         <input class="btn btn-outline-primary" type="submit" value="Create" style="height: 44px; width: 220px;">
     </div>
 </form>
+<script src="{% static 'js/custom.js' %}"></script>
 {% endblock %}
