@@ -30,11 +30,11 @@ class PersonalUserInfo(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     avatara = models.ImageField(upload_to='users_avas/', blank=True, null=True, default='base.jpg')
-    radio_chanal = models.CharField(max_length=2, choices=RADIO_CHANALS, default=RADIO_CHANALS[5])
-    radio_room = models.CharField(max_length=9, blank=True)
-    working_position = models.CharField(max_length=25, blank=True)
-    user_birthday = models.DateField(null=True, blank=True)
-    user_telephone = models.CharField(max_length=15, blank=True)
+    radio_chanal = models.CharField(max_length=2, choices=RADIO_CHANALS, default=RADIO_CHANALS[5], verbose_name='Канал')
+    radio_room = models.CharField(max_length=9, blank=True, verbose_name='Кабинет')
+    working_position = models.CharField(max_length=25, blank=True, verbose_name='Должность')
+    user_birthday = models.DateField(null=True, blank=True, verbose_name='Дата рождения')
+    user_telephone = models.CharField(max_length=15, blank=True, verbose_name='Номер телефона')
     user_about = models.TextField(max_length=255, blank=True)
     # friendlist = 
 

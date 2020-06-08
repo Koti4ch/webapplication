@@ -50,7 +50,7 @@ Create an account
         <div class="d-flex flex-column">
             {% for field in userinfo_form %}
             <div class="standart_form">
-                <div class="standart_form--label text-muted empty">{{ field.label }}</div>
+                <div class="standart_form--label text-muted {% if field.label == 'Канал' or field.label == 'Дата рождения'  %}not-{% endif %}empty">{{ field.label }}</div>
                 <!-- <input type="text" class="standart_form--input" required autocomplete="off"> -->
                 {{ field }}
             </div>

@@ -31,11 +31,11 @@ class RegistrationPersonalUserInfo(forms.ModelForm):
         fields = ('radio_chanal', 'radio_room', 'working_position', 'user_birthday', 'user_telephone')
 
         widgets = {
-            'user_birthday': forms.DateInput(attrs={'type': 'date'}),
-            'radio_room': forms.TextInput(attrs={'class': "standart_form--input"}),
-            'working_position': forms.TextInput(attrs={'class': "standart_form--input"}),
-            'user_birthday': forms.DateInput(attrs={'class': "standart_form--input"}),
-            'user_telephone': forms.DateInput(attrs={'class': "standart_form--input"}),
+            'radio_chanal': forms.Select(attrs={'class': "standart_form--select"}),
+            'radio_room': forms.TextInput(attrs={'class': "standart_form--input", "autocomplete": "off"}),
+            'working_position': forms.TextInput(attrs={'class': "standart_form--input", "autocomplete": "off"}),
+            'user_birthday': forms.DateInput(attrs={'class': "standart_form--input", 'type': "date"}),
+            'user_telephone': forms.DateInput(attrs={'class': "standart_form--input", "autocomplete": "off"}),
         }
 
 

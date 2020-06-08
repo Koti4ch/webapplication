@@ -29,7 +29,7 @@
     top: 13px;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
-    font-size: 0.875rem;
+    font-size: 0.975rem;
     position: absolute;
 }
 
@@ -37,7 +37,7 @@
     top: 50%;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
-    font-size: 0.875rem;
+    font-size: 0.975rem;
     position: absolute;
 }
 
@@ -46,17 +46,38 @@
     top: 50%;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
-    font-size: 0.875rem;
+    font-size: 0.975rem;
     position: absolute;
 }
 
 .standart_form--label + input[type="text"],
-.standart_form--label.empty+input[type="password"] {
-    top: 60%;
+.standart_form--label.empty + input[type="password"] {
+    top: 65%;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
-    font-size: 0.875rem;
+    font-size: 0.975rem;
     position: absolute;
+}
+
+input[type="date"] {
+    top: 50%;
+    padding-top: 12px;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 0.975rem;
+    position: absolute;
+}
+
+/* TODO: select */
+select {
+    border: none;
+    padding: 17px 12px 0 12px;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: transparent;
+    outline: transparent;
 }
 
 
