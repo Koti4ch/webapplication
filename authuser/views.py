@@ -72,7 +72,11 @@ def register(request):
         login_form = LoginForm()
         reg_form = RegistrationUserForm()
         reg_personalInfo = RegistrationPersonalUserInfo()
-        return render(request, 'authuser/registration_page.html', {'reg_form': reg_form, 'login_form': login_form, 'userinfo_form':reg_personalInfo})
+        # for i in reg_form.fields:
+        #     print(i, reg_form.fields[i].required)
+        requiredFieldsList = [field for field in reg_form.fields if reg_form.fields[field].required]
+        requiredFieldsList += [field for field in reg_personalInfo.fields if reg_personalInfo.fields[field].required]
+        return render(request, 'authuser/registration_page.html', {'reg_form': reg_form, 'login_form': login_form, 'userinfo_form':reg_personalInfo, 'requiredFields': requiredFieldsList})
 
 
 
@@ -154,6 +158,7 @@ def editUserInfo(request):
         print(request.POST.get('next'))
         user_form = EditUser(instance=request.user, data=request.POST)
         profile_form = EditPersonalInfo(instance=request.user.personaluserinfo, data=request.POST, files=request.FILES)
+
 
         if user_form.is_valid() and profile_form.is_valid():
             messages.add_message(request, messages.INFO, 'Данные пользователя обновлены.')

@@ -12,16 +12,26 @@ class RegistrationUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
+        labels = {'username': 'Login'}
+        
+        widgets = {
+            'username': forms.TextInput(attrs={'class': "standart_form--input", "autocomplete": "off"}),
+            'email': forms.TextInput(attrs={'class': "standart_form--input", "autocomplete": "off"}),
+            'first_name': forms.TextInput(attrs={'class': "standart_form--input", "autocomplete": "off"}),
+            'last_name': forms.TextInput(attrs={'class': "standart_form--input", "autocomplete": "off"}),
+        }
+    
+    password = forms.CharField(label='Придумайте пароль', widget=forms.PasswordInput(
+        attrs={'class': "standart_form--input"}))
+    password2 = forms.CharField(label='Подтвердите пароль', widget=forms.PasswordInput(attrs={'class': "standart_form--input"}))
 
-
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Пароль2', widget=forms.PasswordInput)
 
     def clean_password2(self):
         cd = self.cleaned_data
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Passwords don\'t match!')
         return cd['password2']
+
 
 
 
@@ -35,7 +45,7 @@ class RegistrationPersonalUserInfo(forms.ModelForm):
             'radio_room': forms.TextInput(attrs={'class': "standart_form--input", "autocomplete": "off"}),
             'working_position': forms.TextInput(attrs={'class': "standart_form--input", "autocomplete": "off"}),
             'user_birthday': forms.DateInput(attrs={'class': "standart_form--input", 'type': "date"}),
-            'user_telephone': forms.DateInput(attrs={'class': "standart_form--input", "autocomplete": "off"}),
+            'user_telephone': forms.TextInput(attrs={'class': "standart_form--input", "autocomplete": "off"}),
         }
 
 

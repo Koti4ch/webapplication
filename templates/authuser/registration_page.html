@@ -10,7 +10,7 @@ Create an account
 {% endblock %}
 
 {% block content %}
-<button id="console" class="btn btn-primary">Console Log</button>
+<!-- <button id="console" class="btn btn-primary">Console Log</button>
 <form class="shadow" action="{% url 'registration' %}" method="POST">
     <legend>Регистрация</legend>
 
@@ -28,37 +28,39 @@ Create an account
           <div class="standart_form--label text-muted empty">E-mail</div>
           <input type="text" class="standart_form--input" required autocomplete="off">
       </div>
-
-</form>
-
-
-
+</form> -->
 
 <form class="shadow" action="{% url 'registration' %}" method="POST">
-    <h3>Заполните форму для регистрации2!</h3>
+    <fieldset>
+    <legend class="form_legend">Заполните форму для регистрации</legend>
     {% csrf_token %}
-    <div class="container d-flex justify-content-around pt-1">
-        <div class="d-flex flex-column">
+    <div class="container">
+        <div class="input_box">
+            <!-- TODO: why not ?{# reg_form.last_name.required #} -->
             {% for field in reg_form %}
-                <div class="d-flex align-items-center justify-content-end mb-2" style="height: 34px;">
-                {{ field.label_tag }}
-                <span class="mr-2"></span>
-                {{ field }}
+                <div class="standart_form {% if field.name in requiredFields %}required{% endif %}">
+                    <div class="standart_form--label text-muted empty">
+                        {{ field.label }}</div>
+                    <!-- <input type="text" class="standart_form--input" required autocomplete="off"> -->
+                    {{ field }}
                 </div>
             {% endfor %}
-        </div>
-        <div class="d-flex flex-column">
             {% for field in userinfo_form %}
             <div class="standart_form">
-                <div class="standart_form--label text-muted {% if field.label == 'Канал' or field.label == 'Дата рождения'  %}not-{% endif %}empty">{{ field.label }}</div>
+                <div
+                    class="standart_form--label text-muted
+                    {% if field.label == 'Канал' or field.label == 'Дата рождения'  %}not-{% endif %}empty
+                    {% if field.name in requiredFields %}required{% endif %}">
+                    {{ field.label }}</div>
                 <!-- <input type="text" class="standart_form--input" required autocomplete="off"> -->
                 {{ field }}
             </div>
             {% endfor %}
         </div>
-    </div>
-    <div class="mt-4 pb-3 d-flex justify-content-center">
-        <input class="btn btn-outline-primary" type="submit" value="Create" style="height: 44px; width: 220px;">
+        </fieldset>
+        <div class="d-flex pb-3">
+            <input class="btn btn-outline-primary mx-auto" type="submit" value="Зарегистрироваться" style="height: 44px; width: 220px;">
+        </div>
     </div>
 </form>
 <script src="{% static 'js/custom.js' %}"></script>

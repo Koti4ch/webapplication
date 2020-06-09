@@ -83,4 +83,3 @@ class PersonalUserInfo(models.Model):
 #         if not old_file == new_file:
 #             if os.path.isfile(old_file.path):
 #                 os.remove(old_file.path)
-
