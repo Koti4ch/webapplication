@@ -4,7 +4,7 @@ from django.conf import settings
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='', widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Login или E-Mail', 'style': 'width:100%;'}))
+        attrs={'autocomplete': 'off' ,'class': 'form-control', 'placeholder': 'Login или E-Mail', 'style': 'width:100%;'}))
     password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Пароль'}))
 
 
@@ -72,7 +72,7 @@ class EditPersonalInfo(forms.ModelForm):
 
         widgets = {
             # 'avatara': forms.FileInput(attrs={'class':"sss", 'style':'position: absolute; top: 78%; left: 16%;', 'value': "Изменить"}),
-            'user_about': forms.Textarea(attrs={'cols': '70', 'rows': '5', 'hidden': 'true', 'class': 'form-control mt-1 mb-1'}),
+            'user_about': forms.Textarea(attrs={'hidden':'true','cols': '70', 'rows': '5', 'class': 'form-control standart_text-area mt-1 mb-1'}),
             'user_birthday': forms.DateInput(attrs={'type': 'date', 'style': 'text-align: end;', 'class': 'form-control mt-1 mb-1'}),
             'radio_chanal': forms.Select(attrs={'class': 'form-control mt-1 mb-1'}),
             'radio_room': forms.TextInput(attrs={'class': 'form-control mt-1 mb-1', 'style': 'text-align: end;', 'size': '4'}),

@@ -1,4 +1,6 @@
 const standartInputs = document.querySelectorAll(".standart_form--input, .standart_form--select");
+const textInArea = document.querySelector(".standart_text-area");
+const aboutMeText = document.querySelector(".about-me");
 
 // function tagCreator(tgt) {
 //     tgt.addEventListener("focus", function () {
@@ -42,3 +44,12 @@ standartInputs.forEach(element => {
         nullcontent(this);
     })
 }); 
+
+// contenteditable DIV to textarea
+aboutMeText.addEventListener("keyup", function(){
+    if (aboutMeText.innerText.length > 255) {
+        aboutMeText.innerText = aboutMeText.innerText.slice(0, 254);
+        window.alert('Вы превысили лимит в 255 символов!');
+    }
+    textInArea.value = aboutMeText.innerText;
+})
