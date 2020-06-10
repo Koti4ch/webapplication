@@ -2,21 +2,6 @@ const standartInputs = document.querySelectorAll(".standart_form--input, .standa
 const textInArea = document.querySelector(".standart_text-area");
 const aboutMeText = document.querySelector(".about-me");
 
-// function tagCreator(tgt) {
-//     tgt.addEventListener("focus", function () {
-//         if (standart_form.previousElementSibling.classList.contains("empty")) {
-//             this.previousElementSibling.classList.toggle("empty");
-//         };
-//         if (!this.parentElement.classList.contains("cont")) {
-//             this.parentElement.classList.toggle("cont");
-//         };
-//     })
-
-//     tgt.addEventListener("blur", function () {
-//         nullcontent(this);
-//     })
-// };
-
 function nullcontent(a) {
     if (a.previousElementSibling.classList.contains("not-empty") && a.value == ""){
         a.parentElement.classList.toggle("cont");
@@ -46,10 +31,25 @@ standartInputs.forEach(element => {
 }); 
 
 // contenteditable DIV to textarea
-aboutMeText.addEventListener("keyup", function(){
-    if (aboutMeText.innerText.length > 255) {
-        aboutMeText.innerText = aboutMeText.innerText.slice(0, 254);
-        window.alert('Вы превысили лимит в 255 символов!');
-    }
-    textInArea.value = aboutMeText.innerText;
-})
+if (aboutMeText != null){
+    aboutMeText.addEventListener("keyup", function(){
+        if (aboutMeText.innerText.length > 255) {
+            aboutMeText.innerText = aboutMeText.innerText.slice(0, 254);
+            window.alert('Вы превысили лимит в 255 символов!');
+        }
+        textInArea.value = aboutMeText.innerText;
+    })
+}
+
+// change avatar logic
+const avatar = document.querySelector(".character-img");
+const fileDialog = document.querySelector(".avatara-input");
+const changeAvatarBtn = document.querySelector(".change-btn");
+
+if (changeAvatarBtn != null) {
+    changeAvatarBtn.addEventListener("click", function(e) {
+        console.log(e);
+        fileDialog.click();
+        fileDialog.files;
+    })
+}

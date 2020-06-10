@@ -154,11 +154,11 @@ def startPage(request):
 @login_required
 def editUserInfo(request):
     if request.method == 'POST':
-        print(request.POST)
         print(request.POST.get('next'))
         user_form = EditUser(instance=request.user, data=request.POST)
         profile_form = EditPersonalInfo(instance=request.user.personaluserinfo, data=request.POST, files=request.FILES)
 
+        print(profile_form)
 
         if user_form.is_valid() and profile_form.is_valid():
             messages.add_message(request, messages.INFO, 'Данные пользователя обновлены.')

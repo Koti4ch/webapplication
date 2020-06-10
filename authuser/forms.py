@@ -71,7 +71,7 @@ class EditPersonalInfo(forms.ModelForm):
         fields = ('avatara', 'radio_chanal', 'radio_room', 'working_position', 'user_birthday', 'user_telephone', 'user_about')
 
         widgets = {
-            # 'avatara': forms.FileInput(attrs={'class':"sss", 'style':'position: absolute; top: 78%; left: 16%;', 'value': "Изменить"}),
+            'avatara': forms.FileInput(attrs={'class':"avatara-input", 'hidden': "true"}),
             'user_about': forms.Textarea(attrs={'hidden':'true','cols': '70', 'rows': '5', 'class': 'form-control standart_text-area mt-1 mb-1'}),
             'user_birthday': forms.DateInput(attrs={'type': 'date', 'style': 'text-align: end;', 'class': 'form-control mt-1 mb-1'}),
             'radio_chanal': forms.Select(attrs={'class': 'form-control mt-1 mb-1'}),
