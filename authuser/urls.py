@@ -16,4 +16,11 @@ urlpatterns = [
     #     template_name='authuser/chpass_page.html',
     #     success_url='/',
     #     ), name='password_change'),
+    
+    ####    reset password     ####
+    path('reset_password', views.PasswordReset.as_view(), name='password_reset'),
+    ####    confirm reset password  ####
+    path('confirm_link/<uidb64>/<token>', views.PasswordResetConfirm.as_view(), name='password_reset_confim'),
+    ####    reset password complete ####
+    # path(''),
 ]

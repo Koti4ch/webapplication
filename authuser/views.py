@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeView, PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -46,7 +46,39 @@ class PasswordChanger(PasswordChangeView):
         messages.success(self.request, "Пароль был успешно изменен.")
         return super().form_valid(form)
 
-    
+####    Custom Password Reset view      ####
+class PasswordReset(PasswordResetView):
+    template_name = 'authuser/password_reset_page.html'
+    print("tyt")
+    email_template_name = "authuser/password_reset_email_tmplt.html"
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        print(form)
+        messages.success(self.request, "На почту выслана ссылка для смены пароля от аккаунта")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print("invalid")
+        messages.error(self.request, "Error!")
+        return super().form_invalid(form)
+
+####    Custom Password Reset Confirm view      ####
+class PasswordResetConfirm(PasswordResetConfirmView):
+    template_name = 'authuser/password_reset_confirm.html'
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Конфирм саксэс")
+        return super().form_valid(form)
+
+####    Password Reset Comlete view         ####
+class PasswordResetComplete(PasswordResetCompleteView):
+    template_name = 'base_tmpl.html'
+
+    def get_template_names(self):
+        messages.success(self.request, "Пароль был успешно изменен")
+        return super().get_template_names()
 
 
 ####    REGISTRATION FORM       ####
@@ -146,6 +178,8 @@ def startPage(request):
         # else:
         #     messages.add_message(request, messages.ERROR, 'Неверный логин или пароль!')
         # return redirect('index')
+        login_form = LoginForm()
+        return render(request, 'base_tmpl.html', {'login_form': login_form})
     else:
         login_form = LoginForm()
         return render(request, 'base_tmpl.html', {'login_form': login_form})

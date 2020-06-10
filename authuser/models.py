@@ -50,7 +50,7 @@ class PersonalUserInfo(models.Model):
 
     def save(self):
         super().save()
-        print("Picture save", self.avatara.path)
+        # print("Picture save", self.avatara.path)
         with Image.open(self.avatara.path) as userava:
             if userava.height > 256 or userava.width > 256:
                 resize = (256, 256)

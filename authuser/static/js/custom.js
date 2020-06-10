@@ -48,8 +48,6 @@ const changeAvatarBtn = document.querySelector(".change-btn");
 
 if (changeAvatarBtn != null) {
     changeAvatarBtn.addEventListener("click", function(e) {
-        console.log(e);
         fileDialog.click();
-        fileDialog.files;
     })
 }
