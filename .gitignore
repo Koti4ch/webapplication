@@ -1,5 +1,6 @@
 **/__pycache__
 **/migrations
 **/users_avas
+**/sent_emails
 .vscode/
 db.sqlite3

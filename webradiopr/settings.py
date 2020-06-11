@@ -140,10 +140,15 @@ SESSION_COOKIE_AGE = 60*60*2
 AUTH_USER_MODEL = 'authuser.User'
 
 
-
+DEFAULT_FROM_EMAIL = 'dkt324@yandex.by'
 # SMTP yandex server
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.yandex.ru"
-EMAIL_HOST_USER = "dkt324@yandex.ru"
+EMAIL_HOST_USER = "dkt324@yandex.by"
 EMAIL_HOST_PASSWORD = "shilov324"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+# local email store
+# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+# EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")

@@ -49,12 +49,11 @@ class PasswordChanger(PasswordChangeView):
 ####    Custom Password Reset view      ####
 class PasswordReset(PasswordResetView):
     template_name = 'authuser/password_reset_page.html'
-    print("tyt")
-    email_template_name = "authuser/password_reset_email_tmplt.html"
+    # email_template_name = "authuser/password_reset_email_tmplt.html"
+    html_email_template_name = "authuser/password_reset_email_tmplt.html"
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
-        print(form)
         messages.success(self.request, "На почту выслана ссылка для смены пароля от аккаунта")
         return super().form_valid(form)
 
@@ -69,16 +68,16 @@ class PasswordResetConfirm(PasswordResetConfirmView):
     success_url = reverse_lazy('index')
 
     def form_valid(self, form):
-        messages.success(self.request, "Конфирм саксэс")
+        messages.success(self.request, "Пароль был успешно изменен")
         return super().form_valid(form)
 
 ####    Password Reset Comlete view         ####
-class PasswordResetComplete(PasswordResetCompleteView):
-    template_name = 'base_tmpl.html'
+# class PasswordResetComplete(PasswordResetCompleteView):
+#     template_name = 'base_tmpl.html'
 
-    def get_template_names(self):
-        messages.success(self.request, "Пароль был успешно изменен")
-        return super().get_template_names()
+#     def get_template_names(self):
+#         messages.success(self.request, "Пароль был успешно изменен")
+#         return super().get_template_names()
 
 
 ####    REGISTRATION FORM       ####
