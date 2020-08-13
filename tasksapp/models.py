@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
 from django.conf import settings
+import uuid
 # Create your models here.
 
 
@@ -9,6 +10,8 @@ class Task(models.Model):
     '''
     Model for tasks
     '''
+    task_id = models.UUIDField(
+        primary_key=True, editable=False, unique=True, default=uuid.uuid4)
     task_title = models.CharField(max_length=50, blank=False, null=False, verbose_name='Заголовок задания', help_text='Не более 50 символов')
     task_slug = models.SlugField(
         max_length=50, blank=False, null=False, verbose_name='task slug title')

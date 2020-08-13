@@ -1,0 +1,16 @@
+{% extends 'base_tmpl.html' %}
+{% load static %}
+
+{% block content %}
+<form action="{% url 'password_change' %}" method="POST" class="mx-auto w-75 shadow-sm">
+    <fieldset class="bg-white border p-4">
+        <legend class="">Открыть задание <span
+            class="text-muted font-weight-bold">{{ request.user.username }}</span></legend>
+            
+            {% csrf_token %}
+            {{ createtaskform.as_p }}
+            
+            <input type="submit" value="Открыть задание">
+        </fieldset>
+    </form>
+{% endblock %}
