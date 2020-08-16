@@ -33,7 +33,7 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="modal" data-target="#auth-popup"><b>Войти</b><span
+                        <a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#auth-popup"><b>Войти</b><span
                                 class="sr-only">(current)</span></a>
                     </li>
                 {% endif %}
@@ -106,6 +106,31 @@
                         <p>перейти к <a class="alert-link" href="{% url 'registration' %}"><u>регистрации</u></a></p>
                     </div>
                     {% endif %}
+                    </div>
+                </div>
+
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Task App</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">ИКОНКА <small class="text-muted">для сервиса</small>
+                        </h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Небольшое описание</li>
+                            <li>приложения и ссылка</li>
+                            <li>для перехода к</li>
+                            <li>выбранному сервису</li>
+                        </ul>
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'taskapp' %}" class="btn btn-lg btn-block btn-outline-primary">Начать</a>
+                        {% else %}
+                        <div class="alert alert-warning" role="alert">
+                            доступно только для зарегистрированных пользователей
+                            <p>перейти к <a class="alert-link" href="{% url 'registration' %}"><u>регистрации</u></a>
+                            </p>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
 

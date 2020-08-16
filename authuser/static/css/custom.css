@@ -109,6 +109,10 @@
     outline: transparent;
 }
 
+.full {
+    width: 100%;
+}
+
 /* avatara behavior */
 .media-img {
     position: relative;
@@ -172,6 +176,7 @@
     background: #00d9ff;
 }
 
+
 @media(max-width: 575px) {
     .standart_form {
         width: 90%;
@@ -185,6 +190,10 @@
 @media(min-width: 1200px) {
     .standart_form {
         width: 30%;
+    }
+
+    .full {
+        width: 100%;
     }
 }
 

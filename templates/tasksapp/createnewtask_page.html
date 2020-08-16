@@ -1,16 +1,32 @@
 {% extends 'base_tmpl.html' %}
 {% load static %}
 
+{% block adition_meta %}
+<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock %}
+
 {% block content %}
-<form action="{% url 'password_change' %}" method="POST" class="mx-auto w-75 shadow-sm">
-    <fieldset class="bg-white border p-4">
-        <legend class="">Открыть задание <span
-            class="text-muted font-weight-bold">{{ request.user.username }}</span></legend>
-            
+    <form class="shadow" action="{% url 'taskapp' %}" method="POST">
+        <fieldset class="">
+            <legend class="form_legend">Создать задание</legend>
             {% csrf_token %}
-            {{ createtaskform.as_p }}
-            
-            <input type="submit" value="Открыть задание">
+            <div class="container">
+                <div class="">
+                    <!-- TODO: why not ?{# reg_form.last_name.required #} -->
+                    {% for field in createtaskform %}
+                    <div class="standart_form full">
+                        <div class="standart_form--label text-muted empty">
+                            {{ field.label }}</div>
+                        <!-- <input type="text" class="standart_form--input" required autocomplete="off"> -->
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                </div>
         </fieldset>
+        <div class="d-flex pb-3">
+            <input class="btn btn-outline-primary mx-auto" type="submit" value="открыть"
+                style="height: 44px; width: 220px;">
+        </div>
+        </div>
     </form>
 {% endblock %}

@@ -32,5 +32,8 @@ class Task(models.Model):
     create_time = models.DateTimeField(default=timezone.datetime.now, blank=True, null=False)
     closed_time = models.DateTimeField(blank=True, null=True)
 
+    # TODO : need add username from comp who create a task
+    # current_user_name = models.CharField(max_length=20, ${blank=True, null=True})
+
     #def __str__(self):
     #    return task_title
