@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.views import View
 from .forms import createNewTaskForm
 from authuser.models import User
+from .models import Task
 from django.utils.text import slugify
 # Create your views here.
 
@@ -23,6 +25,7 @@ def startCreateTask(request):
 
             taskInstance = createtaskform.save(commit=False)
             taskInstance.open_by = userObj
+            # TODO : troubles with russian letters
             taskInstance.task_slug = slugify(taskInstance.task_title + str(taskInstance.task_id)[-13:], allow_unicode=True)
 
             taskInstance.save()
@@ -39,3 +42,14 @@ def startCreateTask(request):
 # TODO: create it in class
 class TaskApp():
     pass
+
+
+class TaskManagerView(View):
+    '''
+    Taskmanager help us to change task status
+    '''
+    def get(self, request):
+        tasklist = Task.objects.all()
+        content = {"tasklist": tasklist}
+        
+        return render(request, 'tasksapp/taskmanager_page.html', content)

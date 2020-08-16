@@ -1,0 +1,36 @@
+{% extends 'base_tmpl.html' %}
+{% load static %}
+
+{% block title %}
+Управление заданиями
+{% endblock %}
+
+{% block content %}
+
+{% for task in tasklist %}
+    <div class="card-deck mb-3 text-center">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">{{task.task_id}}</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title">{{task.task_title}}</h1>
+                <ul class="card-text">
+                    {{task.task_msg}}
+                </ul>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" style="text-align: right;">создал: {{ task.open_by }} | {{ task.create_time }}</li>
+                <li class="list-group-item">закрыл: {{ task.closed_by }}</li>
+            </ul>
+            <div class="card-footer">
+                <button class="btn btn-outline-secondary">Приступить</button>
+                <button class="btn btn-outline-danger">Удалить</button>
+                <button class="btn btn-outline-success">Выполнено</button>
+            </div>
+
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}
