@@ -51,3 +51,73 @@ if (changeAvatarBtn != null) {
         fileDialog.click();
     })
 }
+
+
+
+// colorise taskmanager list
+// ##############################################
+let taskheaders = document.querySelectorAll('.setcolor');
+let taskfooters = document.querySelectorAll('.setborder');
+// ('1', 'Открыто'),
+// ('2', 'В процессе выполнения'),
+// ('3', 'Выполнено'),
+// ('0', 'Удалено'),
+
+function colorizeTask(tasklist) {
+    tasklist.forEach(elem => {
+        switch (elem.dataset.taskstatus) {
+            case '0':
+                if (elem.classList.contains('setcolor')) {
+                    elem.classList.toggle('setcolor');
+                    elem.classList.add('bg-danger');
+                } else if (elem.classList.contains('setborder')) {
+                    elem.classList.toggle('setborder');
+                    elem.classList.add('border-danger');
+                };
+            case '2':
+                if (elem.classList.contains('setcolor')) {
+                    elem.classList.toggle('setcolor');
+                    elem.classList.add('bg-warning');
+                } else if (elem.classList.contains('setborder')) {
+                    elem.classList.toggle('setborder');
+                    elem.classList.add('border-warning');
+                };
+            case '3':
+                if (elem.classList.contains('setcolor')) {
+                    elem.classList.toggle('setcolor');
+                    elem.classList.add('bg-success');
+                } else if (elem.classList.contains('setborder')) {
+                    elem.classList.toggle('setborder');
+                    elem.classList.add('border-success');
+                };
+            case '1':
+                if (elem.classList.contains('setborder')) {
+                    elem.classList.toggle('setborder');
+                    elem.classList.add('border-dark');
+                };
+        }
+    });
+}
+
+colorizeTask(taskheaders);
+colorizeTask(taskfooters);
+
+
+
+// taskheaders.forEach(element => {
+//     switch (element.dataset.taskstatus) {
+//         case '0':
+//             element.classList.toggle('setcolor');
+//             element.classList.add('bg-danger');
+//         case '2':
+//             element.classList.toggle('setcolor');
+//             element.classList.add('bg-warning');
+//         case '3':
+//             element.classList.toggle('setcolor');
+//             element.classList.add('bg-success');
+//     }
+    // if (element.dataset.taskstatus == 0) {
+    //     element.classList.toggle('setcolor');
+    //     element.classList.add('bg-danger');
+    // }
+// });

@@ -5,14 +5,16 @@ from .forms import createNewTaskForm
 from authuser.models import User
 from .models import Task
 from django.utils.text import slugify
+from authuser.forms import LoginForm
 # Create your views here.
 
 
 
 def startCreateTask(request):
     if request.method == 'GET':
+        login_form = LoginForm()
         createtaskform = createNewTaskForm()
-        return render(request, 'tasksapp/createnewtask_page.html', {'createtaskform': createtaskform})
+        return render(request, 'tasksapp/createnewtask_page.html', {'createtaskform': createtaskform, 'login_form': login_form})
 
     if request.method == "POST":
         createtaskform = createNewTaskForm(data=request.POST)
@@ -49,14 +51,18 @@ class TaskManagerView(View):
     Taskmanager help us to change task status
     '''
     def get(self, request):
+        login_form = LoginForm()
+        content = {}
+        content['login_form'] = login_form
         if 'sort_by' in request.GET:
+            content['sort'] = request.GET['sort_by']
             if request.GET['sort_by'] == 'all':
                 tasklist = Task.objects.all().order_by('-create_time')
             else:
                 tasklist = Task.objects.filter(task_status=request.GET['sort_by']).order_by('-create_time')
         else:
             tasklist = Task.objects.all().order_by('-create_time')
-        content = {"tasklist": tasklist}
+        content["tasklist"] = tasklist
         
         return render(request, 'tasksapp/taskmanager_page.html', content)
 
@@ -66,19 +72,19 @@ class TaskManagerActionsView(View):
     TasmanagerActions help us to change task statuses 
     '''
     def post(self, request, action, task):
-        print(request.user.username, request.user.id)
         obj = Task.objects.get(pk=task)
+        
         if action == 'start':
             obj.task_status = obj.STATUSES[1][0]
-            obj.save()
         elif action == 'delete':
+            if obj.task_status == obj.STATUSES[3][0]:
+                obj.delete()
+                return redirect('taskmanager')
             obj.task_status = obj.STATUSES[3][0]
             obj.closed_by = User.objects.get(pk=request.user.id)
-            obj.delete()
         elif action == 'success':
             obj.task_status = obj.STATUSES[2][0]
             obj.closed_by = User.objects.get(pk=request.user.id)
-            obj.save()
 
-
+        obj.save()
         return redirect('taskmanager')

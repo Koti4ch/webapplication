@@ -1,6 +1,10 @@
 {% extends 'base_tmpl.html' %}
 {% load static %}
 
+{% block title %}
+Создать задание
+{% endblock %}
+
 {% block adition_meta %}
 <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 {% endblock %}
@@ -24,7 +28,7 @@
                 </div>
         </fieldset>
         <div class="d-flex pb-3">
-            <input class="btn btn-outline-primary mx-auto" type="submit" value="открыть"
+            <input class="btn btn-outline-primary mx-auto" type="submit" value="ОТКРЫТЬ"
                 style="height: 44px; width: 220px;">
         </div>
         </div>
