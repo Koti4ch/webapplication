@@ -21,10 +21,10 @@ class Task(models.Model):
         ('1', 'Открыто'),
         ('2', 'В процессе выполнения'),
         ('3', 'Выполнено'),
-        ('0', 'Закрыто'),
+        ('0', 'Удалено'),
     )
 
-    task_status = models.CharField(max_length=1, blank=False, null=False, choices=STATUSES, default=STATUSES[0], verbose_name='Состояние заявки', help_text='')
+    task_status = models.CharField(max_length=1, blank=False, null=False, choices=STATUSES, default=STATUSES[0][0], verbose_name='Состояние заявки', help_text='')
     # related_name обязательно, когда надо в форенкея.
     open_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='open_by')
     closed_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='closed_by', null=True, blank=True)

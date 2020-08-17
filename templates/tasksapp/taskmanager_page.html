@@ -6,28 +6,53 @@
 {% endblock %}
 
 {% block content %}
+<form action="{% url 'taskmanager' %}" method="GET">
+    Показать:
+    <select name="sort_by">
+        <option selected value="all">All</option>
+        <option value="0">Closed</option>
+        <option value="3">Success</option>
+        <option value="1">Opened</option>
+        <option value="2">In process</option>
+    </select>
+    <input type="submit" value="sort">
+</form>
 
 {% for task in tasklist %}
     <div class="card-deck mb-3 text-center">
-        <div class="card mb-4 shadow-sm">
+        <div class="card mb-4 shadow-sm {% if task.task_status == '3' %}border-success{% elif task.task_status == '2'%}border-warning{% elif task.task_status == '0' %}border-danger{%endif%}">
             <div class="card-header">
-                <h4 class="my-0 font-weight-normal">{{task.task_id}}</h4>
+                <h6 class="my-0 font-weight-normal">{{task.task_id}}</h6>
             </div>
             <div class="card-body">
-                <h1 class="card-title">{{task.task_title}}</h1>
+                <h3 class="card-title">{{task.task_title}}</h3>
                 <ul class="card-text">
                     {{task.task_msg}}
                 </ul>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item" style="text-align: right;">создал: {{ task.open_by }} | {{ task.create_time }}</li>
+                <li class="list-group-item text-muted d-flex justify-content-between">
+                    <div style="font-size: 12px;">открыто: {{ task.open_by }}</div>
+                    <div style="font-size: 12px;">{{ task.create_time }}</div>
+                </li>
+            {% if request.user.is_authenticated %}    
                 <li class="list-group-item">закрыл: {{ task.closed_by }}</li>
+            {% endif %}
             </ul>
+            {% if request.user.is_authenticated %}
             <div class="card-footer">
-                <button class="btn btn-outline-secondary">Приступить</button>
-                <button class="btn btn-outline-danger">Удалить</button>
-                <button class="btn btn-outline-success">Выполнено</button>
+                <form class="d-flex justify-content-{% if task.task_status == '1' or task.task_status == '2' %}between{% else %}end{% endif %}" method="POST">
+                    {% csrf_token %}
+                {% if task.task_status == '1' or task.task_status == '2' %}
+                <div>
+                <button class="btn btn-sm btn-outline-secondary" formaction="{% url 'taskmanageraction' 'start' task.task_id %}">Приступить</button>
+                <button class="btn btn-sm btn-outline-success" formaction="{% url 'taskmanageraction' 'success' task.task_id %}">Выполнено</button>
+                </div>
+                {% endif %}
+                <button class="btn btn-sm btn-outline-danger" formaction="{% url 'taskmanageraction' 'delete' task.task_id %}">Удалить</button>
+                </form>
             </div>
+            {% endif %}
 
         </div>
     </div>

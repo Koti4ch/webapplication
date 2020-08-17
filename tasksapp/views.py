@@ -49,7 +49,36 @@ class TaskManagerView(View):
     Taskmanager help us to change task status
     '''
     def get(self, request):
-        tasklist = Task.objects.all()
+        if 'sort_by' in request.GET:
+            if request.GET['sort_by'] == 'all':
+                tasklist = Task.objects.all().order_by('-create_time')
+            else:
+                tasklist = Task.objects.filter(task_status=request.GET['sort_by']).order_by('-create_time')
+        else:
+            tasklist = Task.objects.all().order_by('-create_time')
         content = {"tasklist": tasklist}
         
         return render(request, 'tasksapp/taskmanager_page.html', content)
+
+
+class TaskManagerActionsView(View):
+    '''
+    TasmanagerActions help us to change task statuses 
+    '''
+    def post(self, request, action, task):
+        print(request.user.username, request.user.id)
+        obj = Task.objects.get(pk=task)
+        if action == 'start':
+            obj.task_status = obj.STATUSES[1][0]
+            obj.save()
+        elif action == 'delete':
+            obj.task_status = obj.STATUSES[3][0]
+            obj.closed_by = User.objects.get(pk=request.user.id)
+            obj.delete()
+        elif action == 'success':
+            obj.task_status = obj.STATUSES[2][0]
+            obj.closed_by = User.objects.get(pk=request.user.id)
+            obj.save()
+
+
+        return redirect('taskmanager')
