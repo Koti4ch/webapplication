@@ -8,6 +8,8 @@ from .models import Task
 from django.utils import timezone
 from django.utils.text import slugify
 from authuser.forms import LoginForm
+
+import os, socket
 # Create your views here.
 
 
@@ -31,6 +33,8 @@ def startCreateTask(request):
             taskInstance.open_by = userObj
             # TODO : troubles with russian letters
             taskInstance.task_slug = slugify(taskInstance.task_title + str(taskInstance.task_id)[-13:], allow_unicode=True)
+            # taskInstance.current_user_name = os.getlogin()
+            # taskInstance.current_comp_name = socket.gethostname()
 
             taskInstance.save()
 
@@ -75,7 +79,6 @@ class TaskManagerActionsView(View):
     '''
     def post(self, request, action, task):
         obj = Task.objects.get(pk=task)
-        print(request.POST)
         if action == 'start':
             obj.task_status = obj.STATUSES[1][0]
         elif action == 'delete':
@@ -89,5 +92,7 @@ class TaskManagerActionsView(View):
             obj.task_status = obj.STATUSES[2][0]
             obj.closed_by = User.objects.get(pk=request.user.id)
             obj.closed_time = timezone.datetime.now()
+        
+        
         obj.save()
         return redirect('taskmanager')

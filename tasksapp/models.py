@@ -2,7 +2,8 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
 from django.conf import settings
-import uuid
+
+import uuid, os, socket
 # Create your models here.
 
 
@@ -33,7 +34,8 @@ class Task(models.Model):
     closed_time = models.DateTimeField(blank=True, null=True)
 
     # TODO : need add username from comp who create a task
-    # current_user_name = models.CharField(max_length=20, ${blank=True, null=True})
+    current_user_name = models.CharField(max_length=20, default=os.getlogin, blank=True, null=True)
+    current_comp_name = models.CharField(max_length=20, default=socket.gethostname, blank=True, null=True)
 
     def __str__(self):
        return self.task_title

@@ -51,6 +51,11 @@
                         </div>
                     </div>
                 </li>
+                <li class="list-group-item text-muted d-flex justify-content-between align-items-end">
+                    {{ task.current_user_name }}
+                    {{ task.current_comp_name }}
+
+                </li>
             </ul>
             {% if request.user.is_authenticated %}
             <div class="card-footer setborder" data-taskstatus='{{task.task_status}}'>
