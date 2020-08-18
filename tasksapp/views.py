@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views import View
 from .forms import createNewTaskForm
 from authuser.models import User
 from .models import Task
+from django.utils import timezone
 from django.utils.text import slugify
 from authuser.forms import LoginForm
 # Create your views here.
@@ -38,7 +40,7 @@ def startCreateTask(request):
 
 
             messages.add_message(request, messages.INFO,
-                                 'Задание открыто.')
+                                 'Задание {} открыто.'.format(taskInstance.task_title))
         return redirect('index')
 
 # TODO: create it in class
@@ -73,7 +75,7 @@ class TaskManagerActionsView(View):
     '''
     def post(self, request, action, task):
         obj = Task.objects.get(pk=task)
-        
+        print(request.POST)
         if action == 'start':
             obj.task_status = obj.STATUSES[1][0]
         elif action == 'delete':
@@ -82,9 +84,10 @@ class TaskManagerActionsView(View):
                 return redirect('taskmanager')
             obj.task_status = obj.STATUSES[3][0]
             obj.closed_by = User.objects.get(pk=request.user.id)
+            obj.closed_time = timezone.datetime.now()
         elif action == 'success':
             obj.task_status = obj.STATUSES[2][0]
             obj.closed_by = User.objects.get(pk=request.user.id)
-
+            obj.closed_time = timezone.datetime.now()
         obj.save()
         return redirect('taskmanager')
