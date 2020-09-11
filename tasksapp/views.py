@@ -60,6 +60,10 @@ class TaskManagerView(View):
         login_form = LoginForm()
         content = {}
         content['login_form'] = login_form
+        print('REMOTE_HOST:\t', request.META['REMOTE_ADDR'])
+        print('HTTP_HOST:\t', request.META['HTTP_HOST'])
+        print('', socket.gethostbyaddr(request.META['REMOTE_ADDR']))
+        
         if 'sort_by' in request.GET:
             content['sort'] = request.GET['sort_by']
             if request.GET['sort_by'] == 'all':

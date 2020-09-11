@@ -1,5 +1,7 @@
 {% extends 'base_tmpl.html' %}
 {% load static %}
+{% load myinfo %}
+
 
 {% block title %}
 Создать задание
@@ -10,6 +12,8 @@
 {% endblock %}
 
 {% block content %}
+    {% localsystem_info as infos %}
+    {{ infos }}
     <form class="shadow" action="{% url 'taskapp' %}" method="POST">
         <fieldset class="">
             <legend class="form_legend">Создать задание</legend>

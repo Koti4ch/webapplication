@@ -3,4 +3,5 @@
 **/users_avas
 **/sent_emails
 .vscode/
+.idea/
 *.sqlite3
