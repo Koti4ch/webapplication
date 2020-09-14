@@ -17,9 +17,8 @@ class OnlyOneValidate(BaseInlineFormSet):
                 if form.cleaned_data.get('is_correct') == True:
                     checkbox += 1
             except AttributeError:
-                print('AttributeError')
+                # print('AttributeError')
                 pass
-        print(checkbox)
         if checkbox != int(max_correct_answers):
             raise ValidationError(f'Для этого вопроса должно быть выбрано {max_correct_answers} правильных ответов!')
 
@@ -57,5 +56,4 @@ class AskAdmin(admin.ModelAdmin):
 
     def aaaaaaa(self, obj):
         self.counter += 1
-        print(self.counter)
         return f'#{self.counter}'
