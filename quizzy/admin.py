@@ -38,11 +38,16 @@ class AskInline(admin.StackedInline):
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [AskInline,]
-    list_display = ('__str__', 'difficulty', 'direction', 'allanswers')
+    list_display = ('__str__', 'difficulty', 'direction', 'correctAnswers', 'allAnswers')
 
-    def allanswers(self, obj):
+    def correctAnswers(self, obj):
+        return obj.max_correct_answers
+    correctAnswers.short_description = 'Верных ответов'
+    correctAnswers.empty_value_display = '-'
+
+    def allAnswers(self, obj):
         return Ask.objects.filter(question_id=obj.id).count()
-    allanswers.short_description = 'Всего ответов'
+    allAnswers.short_description = 'Всего ответов'
 
 ################################## TEST             #######################
 @admin.register(Ask)

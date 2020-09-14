@@ -26,7 +26,7 @@ class Question(models.Model):
     max_correct_answers = models.CharField("Количество правильных ответов на вопрос", max_length=1, choices=nums, default=rang[1][0])
 
     def __str__(self):
-        return f'{self.description[:10]}...'
+        return f'{self.description[:15]}...'
 
     class Meta:
         verbose_name = 'Вопрос'
